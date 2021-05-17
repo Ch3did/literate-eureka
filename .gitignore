@@ -1,0 +1,4 @@
+.vleureka/
+config.py
+sqlite.db
+__pycache__/
