@@ -2,7 +2,7 @@ from datetime import datetime,timedelta
 
 
 from api_requests.endpoints import time_daily, symbol_search
-from database.transactions import verify_register
+from database.models import verify_register
 from amb_var import TABLES
 
 
@@ -48,10 +48,9 @@ def init():
                 #Envia os dados para serem validados e registrados
                 resposta, msg = verify_register(dados)
                 print(f" * {data} - {symbol}",msg,)
-               
 
             except KeyError:
-                print(f' * Tabela {sy} do dia {str(data)} não encontrado/desabilitado')
+                print(f' * {data} - {sy} desabilitado')
             
             #Contador de dias
             dias-= 1
