@@ -1,5 +1,5 @@
 
-# Importação e persistência de preços de ativos - (iterate-eureka)
+# Importação e persistência de preços de ativos - (iterate eureka)
 
 ## Objetivo
 
