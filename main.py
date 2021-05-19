@@ -1,37 +1,61 @@
-import requests
-import json
-import datetime
+from datetime import datetime,timedelta
 
-from config import chave
 
-# OK - TODO:Importar o dia atual e usa-lo como chave em uma variável
-data_atual = datetime.datetime.today().date()
+from api_requests.endpoints import time_daily, symbol_search
+from database.transactions import verify_register
+from amb_var import TABLES
 
 
 
-#TODO: Criar um arquivo de variáveis de ambiente e aplicar essas variáveis as urls
-#TODO: Criar um arquivo de urls
-time_daily_B3SA3= "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=B3SA3.SAO&interval=5min&apikey="+chave
-
-symbol_search_B3SA3 = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=B3SA3&apikey="+chave
-
-status_list = "https://www.alphavantage.co/query?function=LISTING_STATUS&state=delisted&&apikey="+chave
-
-
-
-# r = requests.get(sla)
-# r2 = requests.get(sla2)
-
-#TODO: Descobrir como procurar os simbolos dentro do status_list
-r3 = requests.get(status_list)
-
-# jason = (json.loads(r.text))
-
-# print(r2.text)
-# print(jason["Time Series (Daily)"]["2021-05-14"])
-
-print(r3.text)
+def verify_data(data_1,dias): 
+    # if not select_max_data():
+    #     return 0
+    # else:
+    data_1 = datetime.strptime(data_1, '%Y-%m-%d').date()
+    data= data_1 - timedelta(days= dias)
+    return  data
 
 
-#TODO: Fazer as conexões com o banco de dados
-#TODO: Fazer a verificação através da data especificada
+def init():
+    for sy in TABLES:
+
+        #Pegado as respostas dos endpoints selecionados
+        dict_td = time_daily(sy)
+        dict_ss = symbol_search(sy)
+
+        #Usa os dados de 7 dias antes do ultimo Refresh da Api
+        last_refreshed = dict_td['Meta Data']['3. Last Refreshed']
+        dias = 7
+        while dias !=0:
+            data = verify_data(last_refreshed,dias)
+
+            #Faz a verificação de status através do KeyError
+            try:
+                fechamento = dict_td['Time Series (Daily)'][str(data)]['4. close']
+                ativo = dict_td['Time Series (Daily)'][str(data)]['5. volume']
+                nome = dict_ss['bestMatches'][0]['2. name']
+                symbol = dict_ss['bestMatches'][0]['1. symbol']
+                status = True
+                dados = {
+                    'status': status,
+                    'symbol': symbol,
+                    'nome': nome,
+                    'data': str(data),
+                    'ativo': ativo,
+                    'preco': fechamento
+                    }
+
+                #Envia os dados para serem validados e registrados
+                resposta, msg = verify_register(dados)
+                print(f" * {data} - {symbol}",msg,)
+               
+
+            except KeyError:
+                print(f' * Tabela {sy} do dia {str(data)} não encontrado/desabilitado')
+            
+            #Contador de dias
+            dias-= 1
+
+                
+if __name__ == "__main__":
+    init()
