@@ -3,7 +3,9 @@ from sqlite3.dbapi2 import Error
 from database.conection import create_connection
 
 
-def create_register(new_reg):
+def create_register(dados):
+    '''Cria um novo registro utilizando dados
+    '''
     conn = create_connection()
     c = conn.cursor()
     try:
@@ -14,12 +16,12 @@ def create_register(new_reg):
                 date, 
                 ativo, 
                 preco)
-                VALUES(?,?,?,?,?,?)''' , (new_reg['status'], 
-                                        new_reg['symbol'], 
-                                        new_reg['nome'], 
-                                        new_reg['data'], 
-                                        new_reg['ativo'], 
-                                        new_reg['preco'])
+                VALUES(?,?,?,?,?,?)''' , (dados['status'], 
+                                        dados['symbol'], 
+                                        dados['nome'], 
+                                        dados['data'], 
+                                        dados['ativo'], 
+                                        dados['preco'])
         )
         conn.commit()
         c.close()
@@ -30,8 +32,16 @@ def create_register(new_reg):
 
 
 def verify_register(dados):
+    '''Seleciona um id utilizando os campos symbol e data.
+    Caso não receba um id com as especificações, manda os dados
+    para o Create_register, se não utiliza os dados para atualização 
+    :return: Um boleano e uma msg referntes a efetividade da query
+    '''
+
     conn = create_connection()
     c = conn.cursor()
+
+    #Valida uma Query selecionando um ID 
     try:
         c.execute('''SELECT id FROM ACOES 
                     WHERE symbol="{}" AND
@@ -50,6 +60,9 @@ def verify_register(dados):
 
 
 def update_data(dados, id):
+    '''Com base em um ID já selecionado, atualiza informações com 
+    os dados da nova requisição
+    '''
     conn = create_connection()
     c = conn.cursor()
     try: 
@@ -74,7 +87,10 @@ def update_data(dados, id):
         return False, e
 
 
+#Feature não implementada
 def select_max_data():
+    ''':return: srt data mais antiga da base
+    '''
     conn = create_connection()
     c = conn.cursor()
     try:
