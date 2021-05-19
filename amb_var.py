@@ -1,0 +1,9 @@
+KEY = '6NLEKEA6FR9NAY0W'
+
+TABLES = (
+    'B3SA3.SAO',
+
+    'PETR4.SAO'
+)
+
+DATABASE = "sqlite.db"
