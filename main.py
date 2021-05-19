@@ -1,18 +1,21 @@
 from datetime import datetime,timedelta
 
-
 from api_requests.endpoints import time_daily, symbol_search
 from database.models import verify_register
 from amb_var import TABLES
 
 
+def verify_data(data_i,dias):
+    '''Recebe uma data e um número de dias e faz a subtração entre os
+    dois
+    :return:  datatime.date resultado
+    '''
 
-def verify_data(data_1,dias): 
-    # if not select_max_data():
-    #     return 0
-    # else:
-    data_1 = datetime.strptime(data_1, '%Y-%m-%d').date()
-    data= data_1 - timedelta(days= dias)
+    #Formata a data recebida em datatime.date
+    data_i = datetime.strptime(data_i, '%Y-%m-%d').date()
+    
+    #Subtrai os dias da data
+    data= data_i - timedelta(days=dias)
     return  data
 
 
