@@ -35,6 +35,8 @@ Primeiramente precisaremos criar o banco aonde os dados das requisições serão
 
 Uma mensagem de status irá ser mostrada, avisando em caso positivo a criação do arquivo.
 
+---
+
 ## Uso
 
 A ferramenta roda unicamente com um comando:
