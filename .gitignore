@@ -2,3 +2,5 @@
 config.py
 sqlite.db
 __pycache__/
+test.py
+arquivo.csv
