@@ -1,14 +1,25 @@
-from os import name
 from sqlite3.dbapi2 import Error
-from database.basics import create_connection
+
+from database.conection import create_connection
 
 
 def create_register(new_reg):
     conn = create_connection()
     c = conn.cursor()
     try:
-        c.execute(''' INSERT INTO ACOES(status, symbol, name, date, ativo, preco)
-            VALUES(?,?,?,?,?,?)''' , (new_reg['status'], new_reg['symbol'], new_reg['nome'], new_reg['data'], new_reg['ativo'], new_reg['preco'])
+        c.execute(''' INSERT INTO ACOES(
+                status, 
+                symbol, 
+                name, 
+                date, 
+                ativo, 
+                preco)
+                VALUES(?,?,?,?,?,?)''' , (new_reg['status'], 
+                                        new_reg['symbol'], 
+                                        new_reg['nome'], 
+                                        new_reg['data'], 
+                                        new_reg['ativo'], 
+                                        new_reg['preco'])
         )
         conn.commit()
         c.close()
@@ -22,7 +33,11 @@ def verify_register(dados):
     conn = create_connection()
     c = conn.cursor()
     try:
-        c.execute('''SELECT id FROM ACOES WHERE symbol="{}" AND date="{}"'''.format(dados['symbol'], dados['data']))
+        c.execute('''SELECT id FROM ACOES 
+                    WHERE symbol="{}" AND
+                    date="{}"'''.format(dados['symbol'], dados['data'])
+        )
+        #Valida se há informações através do tamanho da lista criada
         rows = c.fetchall()
         if len(rows) == 0:
             resposta, msg = create_register(dados)
@@ -33,8 +48,7 @@ def verify_register(dados):
     except Error as e:
         return False, e
 
-    
-    
+
 def update_data(dados, id):
     conn = create_connection()
     c = conn.cursor()
@@ -44,8 +58,14 @@ def update_data(dados, id):
                     symbol = '{}',
                     name = '{}',
                     ativo = '{}',
-                    preco = '{}',
-                    WHERE id  = {};'''.format(dados['status'], dados['symbol'], dados['nome'], dados['data'], dados['ativo'], dados['preco'], id)
+                    preco = '{}'
+                    WHERE id  = {};'''.format(dados['status'], 
+                                        dados['symbol'], 
+                                        dados['nome'], 
+                                        dados['data'], 
+                                        dados['ativo'], 
+                                        dados['preco'], 
+                                        id)
         )
         conn.commit()
         c.close()
@@ -53,10 +73,6 @@ def update_data(dados, id):
     except Error as e:
         return False, e
 
-
-
-
-    
 
 def select_max_data():
     conn = create_connection()
@@ -67,6 +83,3 @@ def select_max_data():
         return rows[0][0]
     except IndexError:
         return None
-
-
-

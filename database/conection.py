@@ -1,10 +1,7 @@
 import sqlite3
 from sqlite3.dbapi2 import Error
-from amb_var import DATABASE, SQL_TABLE
 
-#TODO: Ajustar arquivo para fechar conexão
-#TODO: Criar função para salvar e outra para verificar os dados 
-
+from amb_var import DATABASE
 
 
 def create_connection():
