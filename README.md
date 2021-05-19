@@ -25,15 +25,22 @@ Inc. e persistência de dados com SQLite.
 
 ---
 
-## Ajustando DB
+## Configurações da ferramenta
 
 *Em todos os passos a seguir, sempre que for solicitado algum comando no terminal, e nescessário a ativação do ambiente virtual configurado acima.*
 
-Primeiramente precisaremos criar o banco aonde os dados das requisições serão guardados. Pra isso foi criado o arquivo **create_db.py** que já está configurado para criar o arquivo "*sqlite.db*". Para executa-lo basta utilizar o terminal digitando:
+Primeiramente precisaremos criar o banco aonde os dados das requisições serão guardados (caso queira atrelar a ferramenta a um arquivo DB já existente vide próximo passo). 
+
+Pra isso foi criado o arquivo **create_db.py** que já está configurado para criar o arquivo "*sqlite.db*".  Para executa-lo basta utilizar o terminal digitando:
 
 > python3 create_db.py
 
 Uma mensagem de status irá ser mostrada, avisando em caso positivo a criação do arquivo.
+
+Dentro do projeto existe um arquivo chamado **amb_var.py**, ele tras possibilidade para acrescentar novos symbolos para serem cadastrados e alteração do nome do banco de dados, caso já exista um banco que queira atrelar a ferramenta. Precisaremos utilizar ele para adicionar a chave da API. Vá ao sita da API e faça o registro de sua chave ([Clique Aqui!](https://www.alphavantage.co/support/#api-key)) e adicione a chave dentro do co campo *KEY =* (lembrando de utilizar aspas simples para delimita-la)
+
+Após esses procedimentos estamos prontos para utilizar a ferramenta
+
 
 ---
 
