@@ -14,9 +14,9 @@ SQL_TABLE = """ CREATE TABLE IF NOT EXISTS ACOES (
 
 
 def create_db():
-    """create the database using the sql_create_projects_table and the 
-        connection
-        :return: Message status
+    """create the database using the sql_create_projects_table and the
+    connection
+    :return: Message status
     """
     # create a database connection
     conn = create_connection()
@@ -27,12 +27,12 @@ def create_db():
         try:
             c = conn.cursor()
             c.execute(SQL_TABLE)
-            print(" * "+"Table created sucessfully ")
+            print(" * " + "Table created sucessfully ")
         except Error as e:
-            print(" * ERROR - "+e)
+            print(" * ERROR - " + e)
     else:
         print(" * ERROR - cannot create the database connection.")
-    
+
     conn.commit()
     conn.close()
 

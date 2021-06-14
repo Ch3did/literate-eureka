@@ -5,8 +5,8 @@ from amb_var import DATABASE
 
 
 def create_connection():
-    """ cria uma conexão com a database SQLite
-        :return: Conexão ou None
+    """cria uma conexão com a database SQLite
+    :return: Conexão ou None
     """
     conn = None
     try:
@@ -16,5 +16,3 @@ def create_connection():
         print(err)
 
     return conn
-
-

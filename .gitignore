@@ -1,4 +1,5 @@
 .vleureka/
+venv/
 config.py
 sqlite.db
 __pycache__/
